@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Academic Performance Calculator</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <link rel="stylesheet" href="style.css">
+  <link rel="shortcut icon" href="https://media.istockphoto.com/id/1515913422/photo/a-data-analyst-using-technology-ai-for-working-tool-for-data-analysis-chatbot-chat-with-ai.jpg?s=1024x1024&w=is&k=20&c=1Gp42CNED2rctVjUgHazI_2YmauuP0zb6RYuGRacwaY=" type="image/x-icon" style="border: 50%;">
+</head>
+<body>
+
+  <div class="container">
+    <h1>🎓 Academic Performance Calculator</h1>
+    <p class="description">Track your semester GPA and calculate overall CGPA</p>
+    
+    <div class="tabs">
+      <div class="tab active" onclick="switchTab('current')">Current Semester</div>
+      <div class="tab" onclick="switchTab('overview')">CGPA Overview</div>
+      <div class="tab" onclick="switchTab('progress')">Academic Progress</div>
+      <div class="tab" onclick="switchTab('data')">Data Management</div>
+    </div>
+    
+    <div id="current-semester" class="tab-content">
+      <div class="controls">
+        <div class="semester-selector">
+          <label for="semester">Semester:</label>
+          <select id="semester" onchange="loadSemesterData()">
+            <option value="1">Semester 1</option>
+            <option value="2">Semester 2</option>
+            <option value="3">Semester 3</option>
+            <option value="4">Semester 4</option>
+            <option value="5">Semester 5</option>
+            <option value="6">Semester 6</option>
+            <option value="7">Semester 7</option>
+            <option value="8">Semester 8</option>
+          </select>
+        </div>
+        
+        <div>
+          <label for="studentName">Student Name:</label>
+          <input type="text" id="studentName" placeholder="Enter your name">
+        </div>
+        
+        <div>
+          <label for="studentID">Student ID:</label>
+          <input type="text" id="studentID" placeholder="Enter your ID">
+        </div>
+      </div>
+
+      <table id="marksTable">
+        <thead>
+          <tr>
+            <th>Subject</th>
+            <th>Marks (out of 100)</th>
+            <th>Credit Hours</th>
+            <th>Grade Points</th>
+            <th>Status</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody id="tableBody">
+          <tr>
+            <td><input type="text" placeholder="e.g. Mathematics"></td>
+            <td><input type="number" min="0" max="100" placeholder="Marks"></td>
+            <td><input type="number" min="1" max="4" placeholder="Credit" value="3"></td>
+            <td>-</td>
+            <td>-</td>
+            <td><button class="reset-btn" onclick="deleteRow(this)" style="padding: 5px 8px;">✕</button></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div style="text-align: center; margin-top: 20px;">
+        <button class="add-btn" onclick="addSubject()">+ Add Subject</button>
+        <button onclick="calculateResult()">Calculate Result</button>
+        <button class="reset-btn" onclick="resetCurrentSemester()">Reset Semester</button>
+      </div>
+
+      <div class="result" id="resultBox">
+        <h3>Your Result will appear here 📊</h3>
+      </div>
+      
+      <div class="action-buttons">
+        <button class="export-btn" onclick="exportToPDF()">📄 Export to PDF</button>
+        <button onclick="saveData()">💾 Save Data</button>
+        <button onclick="loadData()">📂 Load Data</button>
+      </div>
+    </div>
+    
+    <div id="cgpa-overview" class="tab-content" style="display: none;">
+      <h2>CGPA Overview</h2>
+      <p>Your cumulative performance across all semesters</p>
+      
+      <div class="cgpa-summary">
+        <div class="result-grid">
+          <div class="result-item">
+            <div>Overall CGPA</div>
+            <div class="result-value" id="overall-cgpa">0.00</div>
+          </div>
+          <div class="result-item">
+            <div>Total Credits</div>
+            <div class="result-value" id="total-credits">0</div>
+          </div>
+          <div class="result-item">
+            <div>Completed Semesters</div>
+            <div class="result-value" id="completed-semesters">0/8</div>
+          </div>
+          <div class="result-item">
+            <div>Overall Grade</div>
+            <div class="result-value" id="overall-grade">-</div>
+          </div>
+        </div>
+        
+        <h3 style="margin-top: 20px;">Semester Results</h3>
+        <div class="semester-results" id="semester-results">
+          <!-- Semester cards will be dynamically added here -->
+        </div>
+      </div>
+    </div>
+    
+    <div id="academic-progress" class="tab-content" style="display: none;">
+      <h2>Academic Progress</h2>
+      <p>Track your performance over time</p>
+      
+      <div class="progress-container">
+        <h3>CGPA Progress</h3>
+        <div id="cgpa-chart">
+          <!-- CGPA chart will be dynamically added here -->
+        </div>
+        
+        <h3 style="margin-top: 20px;">Credit Completion</h3>
+        <p>Total Credits Completed: <span id="completed-credits">0</span> / <span id="total-required-credits">120</span></p>
+        <div class="progress-bar">
+          <div class="progress-fill" id="credit-progress" style="width: 0%"></div>
+        </div>
+        
+        <h3 style="margin-top: 20px;">Degree Completion</h3>
+        <p>Semesters Completed: <span id="completed-sem-count">0</span> / 8</p>
+        <div class="progress-bar">
+          <div class="progress-fill" id="degree-progress" style="width: 0%"></div>
+        </div>
+      </div>
+    </div>
+    
+    <div id="data-management" class="tab-content" style="display: none;">
+      <h2>Data Management</h2>
+      <p>Manage your academic data</p>
+      
+      <div class="data-management">
+        <h3>Data Operations</h3>
+        <p>Backup, restore, or reset your academic data</p>
+        
+        <div class="data-buttons">
+          <button class="export-btn" onclick="exportAllData()">📤 Export All Data</button>
+          <button onclick="importData()">📥 Import Data</button>
+          <button class="reset-btn" onclick="showResetModal()">🔄 Reset Current Semester</button>
+          <button class="delete-btn" onclick="showDeleteModal()">🗑️ Delete All Data</button>
+        </div>
+        
+        <div class="result" style="margin-top: 20px;">
+          <h3>Storage Information</h3>
+          <div class="result-grid">
+            <div class="result-item">
+              <div>Data Size</div>
+              <div class="result-value" id="data-size">0 KB</div>
+            </div>
+            <div class="result-item">
+              <div>Last Updated</div>
+              <div class="result-value" id="last-updated">-</div>
+            </div>
+            <div class="result-item">
+              <div>Semesters with Data</div>
+              <div class="result-value" id="semesters-with-data">0</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="footer">
+      <p>Academic Performance Calculator v4.0 | Complete CGPA Tracking & Data Management</p>
+    </div>
+  </div>
+
+  <!-- Delete Confirmation Modal -->
+  <div id="deleteModal" class="modal">
+    <div class="modal-content">
+      <h3>Delete All Data</h3>
+      <p>Are you sure you want to delete ALL your academic data? This action cannot be undone.</p>
+      <div class="modal-buttons">
+        <button class="delete-btn" onclick="deleteAllData()">Yes, Delete All</button>
+        <button onclick="closeModal('deleteModal')">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Reset Confirmation Modal -->
+  <div id="resetModal" class="modal">
+    <div class="modal-content">
+      <h3>Reset Current Semester</h3>
+      <p>Are you sure you want to reset the current semester data? This action cannot be undone.</p>
+      <div class="modal-buttons">
+        <button class="reset-btn" onclick="resetCurrentSemesterConfirmed()">Yes, Reset</button>
+        <button onclick="closeModal('resetModal')">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="index.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,573 @@
+ * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    
+    body {
+      font-family: "Poppins", sans-serif;
+      background: linear-gradient(135deg, #4facfe, #00f2fe);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: #333;
+      padding: 20px;
+    }
+    
+    .container {
+      background: white;
+      width: 90%;
+      max-width: 1200px;
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+    }
+    
+    h1 {
+      text-align: center;
+      color: #0078ff;
+      margin-bottom: 20px;
+      font-weight: 600;
+    }
+    
+    .description {
+      text-align: center;
+      margin-bottom: 25px;
+      color: #555;
+    }
+    
+    .tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 20px;
+      justify-content: center;
+    }
+    
+    .tab {
+      padding: 10px 20px;
+      background: #e0e0e0;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: 0.3s;
+      font-weight: 500;
+      text-align: center;
+      flex: 1;
+      min-width: 120px;
+    }
+    
+    .tab.active {
+      background: #0078ff;
+      color: white;
+    }
+    
+    .tab:hover:not(.active) {
+      background: #d0d0d0;
+    }
+    
+    .controls {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    
+    .semester-selector {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    }
+    
+    th, td {
+      padding: 12px;
+      text-align: center;
+      border-bottom: 1px solid #ddd;
+    }
+    
+    th {
+      background: #0078ff;
+      color: white;
+      font-weight: 500;
+    }
+    
+    input[type="text"], input[type="number"], select {
+      width: 90%;
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      text-align: center;
+      font-family: "Poppins", sans-serif;
+    }
+    
+    button {
+      background: #0078ff;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 1em;
+      transition: 0.2s;
+      font-family: "Poppins", sans-serif;
+      font-weight: 500;
+    }
+    
+    button:hover {
+      background: #005ecc;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    
+    .add-btn {
+      background: #4caf50;
+    }
+    
+    .add-btn:hover {
+      background: #388e3c;
+    }
+    
+    .export-btn {
+      background: #ff9800;
+    }
+    
+    .export-btn:hover {
+      background: #f57c00;
+    }
+    
+    .reset-btn {
+      background: #f44336;
+    }
+    
+    .reset-btn:hover {
+      background: #d32f2f;
+    }
+    
+    .delete-btn {
+      background: #d32f2f;
+    }
+    
+    .delete-btn:hover {
+      background: #b71c1c;
+    }
+    
+    .result {
+      margin-top: 25px;
+      text-align: center;
+      background: #f4f6fb;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    }
+    
+    .result-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 15px;
+      margin-top: 15px;
+    }
+    
+    .result-item {
+      background: white;
+      padding: 15px;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    }
+    
+    .result-value {
+      font-size: 1.5em;
+      font-weight: 600;
+      margin-top: 5px;
+    }
+    
+    .fail {
+      color: #f44336;
+      font-weight: bold;
+    }
+    
+    .pass {
+      color: #4caf50;
+      font-weight: bold;
+    }
+    
+    .grade-A {
+      color: #4caf50;
+    }
+    
+    .grade-B {
+      color: #2196f3;
+    }
+    
+    .grade-C {
+      color: #ff9800;
+    }
+    
+    .grade-D {
+      color: #ff5722;
+    }
+    
+    .grade-F {
+      color: #f44336;
+    }
+    
+    .action-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin-top: 20px;
+      flex-wrap: wrap;
+    }
+    
+    .footer {
+      text-align: center;
+      margin-top: 30px;
+      font-size: 0.9em;
+      color: #777;
+    }
+    
+    .cgpa-summary {
+      margin-top: 30px;
+      background: #f4f6fb;
+      padding: 20px;
+      border-radius: 10px;
+    }
+    
+    .semester-results {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 15px;
+      margin-top: 15px;
+    }
+    
+    .semester-card {
+      background: white;
+      padding: 15px;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+      transition: transform 0.2s;
+      cursor: pointer;
+    }
+    
+    .semester-card:hover {
+      transform: translateY(-5px);
+    }
+    
+    .semester-card.active {
+      border: 2px solid #0078ff;
+    }
+    
+    .semester-card h4 {
+      margin-bottom: 10px;
+      color: #0078ff;
+    }
+    
+    .progress-container {
+      margin-top: 20px;
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    }
+    
+    .progress-bar {
+      height: 20px;
+      background: #e0e0e0;
+      border-radius: 10px;
+      margin-top: 10px;
+      overflow: hidden;
+    }
+    
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #4caf50, #8bc34a);
+      border-radius: 10px;
+      transition: width 0.5s ease;
+    }
+    
+    .data-management {
+      margin-top: 30px;
+      background: #f4f6fb;
+      padding: 20px;
+      border-radius: 10px;
+    }
+    
+    .data-buttons {
+      display: flex;
+      gap: 15px;
+      justify-content: center;
+      margin-top: 15px;
+      flex-wrap: wrap;
+    }
+    
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 1000;
+      justify-content: center;
+      align-items: center;
+    }
+    
+    .modal-content {
+      background: white;
+      padding: 30px;
+      border-radius: 10px;
+      max-width: 500px;
+      width: 90%;
+      text-align: center;
+    }
+    
+    .modal-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin-top: 20px;
+    }
+    
+    /* Mobile Responsive Styles */
+    @media (max-width: 1200px) {
+      .container {
+        width: 95%;
+        padding: 25px;
+      }
+    }
+    
+    @media (max-width: 992px) {
+      .container {
+        width: 98%;
+        padding: 20px;
+      }
+      
+      .tabs {
+        gap: 8px;
+      }
+      
+      .tab {
+        padding: 8px 15px;
+        min-width: 100px;
+        font-size: 0.9em;
+      }
+      
+      .controls {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 15px;
+      }
+      
+      .semester-selector {
+        justify-content: center;
+      }
+      
+      .result-grid {
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 10px;
+      }
+      
+      .semester-results {
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      }
+    }
+    
+    @media (max-width: 768px) {
+      body {
+        padding: 10px;
+        align-items: flex-start;
+      }
+      
+      .container {
+        padding: 15px;
+        border-radius: 15px;
+      }
+      
+      h1 {
+        font-size: 1.5em;
+        margin-bottom: 15px;
+      }
+      
+      .description {
+        font-size: 0.9em;
+        margin-bottom: 20px;
+      }
+      
+      .tabs {
+        flex-direction: column;
+        gap: 5px;
+      }
+      
+      .tab {
+        padding: 10px;
+        min-width: auto;
+      }
+      
+      table {
+        font-size: 0.85em;
+      }
+      
+      th, td {
+        padding: 8px 4px;
+      }
+      
+      input[type="text"], input[type="number"], select {
+        padding: 6px;
+        font-size: 0.85em;
+      }
+      
+      button {
+        padding: 8px 12px;
+        font-size: 0.9em;
+      }
+      
+      .action-buttons {
+        flex-direction: column;
+        gap: 10px;
+      }
+      
+      .data-buttons {
+        flex-direction: column;
+      }
+      
+      .result {
+        padding: 15px;
+      }
+      
+      .result-item {
+        padding: 10px;
+      }
+      
+      .result-value {
+        font-size: 1.3em;
+      }
+      
+      .cgpa-summary, .data-management, .progress-container {
+        padding: 15px;
+      }
+      
+      .semester-card {
+        padding: 10px;
+      }
+      
+      .modal-content {
+        padding: 20px;
+      }
+      
+      .modal-buttons {
+        flex-direction: column;
+      }
+    }
+    
+    @media (max-width: 576px) {
+      body {
+        padding: 5px;
+      }
+      
+      .container {
+        padding: 10px;
+        border-radius: 10px;
+      }
+      
+      h1 {
+        font-size: 1.3em;
+      }
+      
+      .description {
+        font-size: 0.8em;
+      }
+      
+      table {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+        font-size: 0.8em;
+      }
+      
+      th, td {
+        padding: 6px 3px;
+      }
+      
+      input[type="text"], input[type="number"], select {
+        padding: 4px;
+        font-size: 0.8em;
+        width: 85%;
+      }
+      
+      button {
+        padding: 6px 10px;
+        font-size: 0.85em;
+        width: 100%;
+      }
+      
+      .result-grid {
+        grid-template-columns: 1fr;
+        gap: 8px;
+      }
+      
+      .semester-results {
+        grid-template-columns: 1fr;
+      }
+      
+      .progress-bar {
+        height: 15px;
+      }
+      
+      .footer {
+        font-size: 0.8em;
+      }
+    }
+    
+    @media (max-width: 400px) {
+      .container {
+        padding: 8px;
+      }
+      
+      h1 {
+        font-size: 1.2em;
+      }
+      
+      .tab {
+        padding: 8px;
+        font-size: 0.8em;
+      }
+      
+      th, td {
+        padding: 4px 2px;
+      }
+      
+      input[type="text"], input[type="number"], select {
+        padding: 3px;
+        font-size: 0.75em;
+      }
+      
+      .result-value {
+        font-size: 1.1em;
+      }
+    }
+    
+    /* Print Styles */
+    @media print {
+      body {
+        background: white;
+        padding: 0;
+      }
+      
+      .container {
+        box-shadow: none;
+        width: 100%;
+        max-width: 100%;
+      }
+      
+      button, .tabs, .footer {
+        display: none;
+      }
+    }
